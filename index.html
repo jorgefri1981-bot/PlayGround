@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101611" />
+  <title>Canica — un mundo en equilibrio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23c8f36b'/%3E%3Ccircle cx='32' cy='32' r='12' fill='%23101511'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Canica, inicio"><span class="brand-mark">◉</span><span>canica<span class="brand-dot">.</span></span></a>
+      <div class="top-center"><span class="season-pill"><span class="live-dot"></span> CAMPAÑA · TEMPORADA 01</span><span class="top-level" id="topLevel">MUNDO 01 <b>·</b> 01</span></div>
+      <button class="icon-btn sound-btn" id="soundBtn" aria-label="Activar o desactivar sonido">♫</button>
+    </header>
+
+    <section class="game-layout">
+      <div class="play-column">
+        <section class="level-heading">
+          <div class="eyebrow"><span class="eyebrow-line"></span><span id="levelEyebrow">PRIMEROS PASOS</span></div>
+          <div class="title-line"><h1 id="levelTitle">La primera curva</h1><span class="level-badge" id="levelBadge">01 / 08</span></div>
+          <p id="levelDescription">Sigue el camino de luz. Cada movimiento cuenta.</p>
+        </section>
+
+        <div class="board-wrap">
+          <div class="board-topline"><div class="board-status"><span class="status-pulse"></span><span id="boardStatus">TABLERO ESTABLE</span></div><div class="move-counter">MOVIMIENTOS <b id="moveCount">00</b></div></div>
+          <canvas id="gameCanvas" aria-label="Tablero isométrico de canicas"></canvas>
+          <div class="canvas-hint" id="canvasHint"><span>✦</span> Elige una dirección para rodar</div>
+          <div class="board-bottomline"><span><i class="legend-start"></i> INICIO</span><span><i class="legend-path"></i> CARRIL ACTIVO</span><span><i class="legend-goal">✦</i> META</span></div>
+        </div>
+
+        <div class="controls-row">
+          <div class="dpad" aria-label="Mover canica">
+            <button class="move-key key-up" data-move="up" aria-label="Mover arriba">↑</button>
+            <button class="move-key key-left" data-move="left" aria-label="Mover izquierda">←</button>
+            <button class="move-key key-down" data-move="down" aria-label="Mover abajo">↓</button>
+            <button class="move-key key-right" data-move="right" aria-label="Mover derecha">→</button>
+            <span class="dpad-center">MOVE</span>
+          </div>
+          <div class="action-controls">
+            <button class="action-btn jump-btn" id="jumpBtn"><span class="action-icon">↟</span><span><b>Saltar</b><small>Supera un hueco</small></span><kbd>ESPACIO</kbd></button>
+            <button class="action-btn rotate-btn" id="rotateBtn"><span class="action-icon">⟳</span><span><b>Girar</b><small>Rota la plataforma</small></span><kbd>R</kbd></button>
+            <button class="action-btn shift-btn" id="shiftBtn"><span class="action-icon">⇆</span><span><b>Mover carril</b><small>Desliza la fila actual</small></span><kbd>⇧</kbd></button>
+          </div>
+          <div class="utility-controls"><button id="undoBtn" class="utility-btn" title="Deshacer último movimiento">↶<span>Deshacer</span></button><button id="resetBtn" class="utility-btn" title="Reiniciar nivel">↻<span>Reiniciar</span></button></div>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <section class="mission-card">
+          <div class="panel-kicker"><span>01</span> MISIÓN</div>
+          <h2 id="missionTitle">A rodar se aprende</h2>
+          <p id="missionText">Llega a la estrella siguiendo el carril iluminado. Usa las flechas o desliza en el tablero.</p>
+          <div class="mission-progress"><div class="progress-copy"><span>PROGRESO</span><b id="progressText">0 / 8</b></div><div class="progress-track"><i id="progressBar"></i></div></div>
+          <div class="objective" id="objective"><span class="objective-icon">✧</span><span id="objectiveText">Llega a la meta</span><span class="objective-check" id="objectiveCheck">○</span></div>
+        </section>
+
+        <section class="level-card">
+          <div class="panel-head"><div><div class="panel-kicker"><span>02</span> TU RECORRIDO</div><h2>Los mundos</h2></div><button class="tiny-link" id="allLevelsBtn">VER TODO <span>↗</span></button></div>
+          <div class="level-list" id="levelList"></div>
+        </section>
+
+        <section class="marble-card">
+          <div class="panel-head"><div><div class="panel-kicker"><span>03</span> PERSONALIZA</div><h2>Tu canica</h2></div><button class="edit-marble" id="skinBtn" aria-label="Cambiar canica">✎</button></div>
+          <button class="skin-preview" id="skinPreview"><span class="mini-marble" id="miniMarble">⚽</span><span class="skin-name"><b id="skinName">Fútbol</b><small id="skinSub">EDICIÓN CLÁSICA</small></span><span class="skin-chevron">›</span></button>
+          <div class="skin-swatches" id="skinSwatches" aria-label="Skins disponibles"></div>
+          <div class="custom-row"><span>FORMA</span><div class="shape-options" id="shapeOptions"><button class="shape-chip active" data-shape="sphere">◯ Esfera</button><button class="shape-chip" data-shape="crystal">⬡ Cristal</button></div></div>
+          <div class="custom-row color-row"><span>COLOR</span><div class="color-options" id="colorOptions" aria-label="Colores personalizados"></div></div>
+        </section>
+        <div class="side-footer"><span>HECHO PARA RODAR <b>●</b></span><span>v1.0</span></div>
+      </aside>
+    </section>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Cerrar">×</button>
+        <div class="modal-emblem" id="modalEmblem">✦</div>
+        <div class="panel-kicker" id="modalKicker">NIVEL COMPLETADO</div>
+        <h2 id="modalTitle">¡Qué bien rueda!</h2>
+        <p id="modalText">Has encontrado el camino.</p>
+        <div class="star-row" id="starRow">★ ★ ★</div>
+        <button class="primary-btn" id="nextBtn">SIGUIENTE NIVEL <span>→</span></button>
+        <button class="secondary-btn" id="replayBtn">Volver a jugar</button>
+      </section>
+    </div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
